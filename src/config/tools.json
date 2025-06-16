@@ -1,0 +1,211 @@
+{
+    "docker_container": {
+      "name": "bi-tools-container",
+      "image": "bi-intelligence/tools:latest",
+      "api_endpoint": "http://localhost:8080",
+      "health_check": "/health",
+      "timeout": 30000
+    },
+    "mcp_servers": {
+      "document_analysis": {
+        "name": "Document Layout Analysis",
+        "command": "python",
+        "args": ["C:/Users/hp/Downloads/mcp_server.py"],
+        "api_endpoint": "http://192.168.1.29:8000",
+        "health_check": "/health",
+        "timeout": 300000,
+        "description": "Advanced document analysis using FastMCP and layout detection"
+      }
+    },
+    "available_tools": [
+      {
+        "id": "pdf_analyzer",
+        "name": "PDF Analyzer",
+        "description": "Extract and analyze content from PDF documents",
+        "endpoint": "/tools/pdf/analyze",
+        "input_types": ["application/pdf"],
+        "capabilities": ["text_extraction", "metadata_analysis", "structure_detection"],
+        "parameters": {
+          "extract_images": { "type": "boolean", "default": false },
+          "extract_tables": { "type": "boolean", "default": true },
+          "language": { "type": "string", "default": "auto" }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "excel_processor",
+        "name": "Excel Processor",
+        "description": "Process and analyze Excel spreadsheets",
+        "endpoint": "/tools/excel/process",
+        "input_types": ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"],
+        "capabilities": ["data_analysis", "chart_generation", "formula_evaluation"],
+        "parameters": {
+          "sheet_name": { "type": "string", "default": null },
+          "include_charts": { "type": "boolean", "default": true },
+          "data_summary": { "type": "boolean", "default": true }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "image_analyzer",
+        "name": "Image Analyzer",
+        "description": "Analyze and extract information from images",
+        "endpoint": "/tools/image/analyze",
+        "input_types": ["image/jpeg", "image/png", "image/gif", "image/bmp"],
+        "capabilities": ["object_detection", "text_extraction", "metadata_analysis"],
+        "parameters": {
+          "detect_text": { "type": "boolean", "default": true },
+          "detect_objects": { "type": "boolean", "default": true },
+          "extract_metadata": { "type": "boolean", "default": true }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "text_processor",
+        "name": "Text Processor",
+        "description": "Process and analyze text documents",
+        "endpoint": "/tools/text/process",
+        "input_types": ["text/plain", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+        "capabilities": ["sentiment_analysis", "keyword_extraction", "summarization"],
+        "parameters": {
+          "summarize": { "type": "boolean", "default": true },
+          "extract_keywords": { "type": "boolean", "default": true },
+          "sentiment_analysis": { "type": "boolean", "default": false }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "data_visualizer",
+        "name": "Data Visualizer",
+        "description": "Create charts and visualizations from data",
+        "endpoint": "/tools/data/visualize",
+        "input_types": ["text/csv", "application/json"],
+        "capabilities": ["chart_generation", "statistical_analysis", "data_insights"],
+        "parameters": {
+          "chart_type": { "type": "string", "default": "auto" },
+          "include_statistics": { "type": "boolean", "default": true },
+          "color_scheme": { "type": "string", "default": "default" }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "video_processor",
+        "name": "Video Processor",
+        "description": "Extract information from video files",
+        "endpoint": "/tools/video/process",
+        "input_types": ["video/mp4", "video/avi", "video/mov", "video/wmv"],
+        "capabilities": ["frame_extraction", "audio_extraction", "metadata_analysis"],
+        "parameters": {
+          "extract_frames": { "type": "boolean", "default": true },
+          "frame_interval": { "type": "number", "default": 5 },
+          "extract_audio": { "type": "boolean", "default": false }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "audio_processor",
+        "name": "Audio Processor",
+        "description": "Process and analyze audio files",
+        "endpoint": "/tools/audio/process",
+        "input_types": ["audio/mp3", "audio/wav", "audio/flac", "audio/aac"],
+        "capabilities": ["transcription", "audio_analysis", "metadata_extraction"],
+        "parameters": {
+          "transcribe": { "type": "boolean", "default": true },
+          "language": { "type": "string", "default": "auto" },
+          "include_timestamps": { "type": "boolean", "default": true }
+        },
+        "source": "docker"
+      },
+      {
+        "id": "extract_figures_from_pdf",
+        "name": "PDF Figure Extractor",
+        "description": "Extract figures with captions from PDF documents using advanced layout analysis",
+        "input_types": ["application/pdf"],
+        "capabilities": ["figure_extraction", "caption_detection", "image_stitching"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      },
+      {
+        "id": "extract_tables_from_pdf",
+        "name": "PDF Table Extractor",
+        "description": "Extract tables with captions and footnotes from PDF documents",
+        "input_types": ["application/pdf"],
+        "capabilities": ["table_extraction", "caption_detection", "footnote_analysis", "rotation_handling"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      },
+      {
+        "id": "extract_text_from_pdf",
+        "name": "PDF Text Extractor",
+        "description": "Extract and categorize text blocks from PDF documents",
+        "input_types": ["application/pdf"],
+        "capabilities": ["text_extraction", "text_categorization", "structure_analysis"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      },
+      {
+        "id": "extract_formulas_from_pdf",
+        "name": "PDF Formula Extractor",
+        "description": "Extract mathematical formulas from PDF documents",
+        "input_types": ["application/pdf"],
+        "capabilities": ["formula_extraction", "mathematical_analysis", "caption_detection"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      },
+      {
+        "id": "get_pdf_document_stats",
+        "name": "PDF Document Statistics",
+        "description": "Get comprehensive statistics about PDF documents",
+        "input_types": ["application/pdf"],
+        "capabilities": ["document_analysis", "statistics_generation", "element_counting"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      },
+      {
+        "id": "analyze_pdf_layout",
+        "name": "PDF Layout Analyzer",
+        "description": "Analyze layout and spatial relationships in PDF documents",
+        "input_types": ["application/pdf"],
+        "capabilities": ["layout_analysis", "spatial_relationships", "structure_detection"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      },
+      {
+        "id": "extract_all_from_pdf",
+        "name": "Complete PDF Extractor",
+        "description": "Extract all elements (figures, tables, text, formulas) from PDF documents",
+        "input_types": ["application/pdf"],
+        "capabilities": ["comprehensive_extraction", "multi_element_analysis", "complete_document_processing"],
+        "parameters": {
+          "confidence": { "type": "number", "default": 0.2, "min": 0.1, "max": 0.9 }
+        },
+        "source": "mcp",
+        "server": "document_analysis"
+      }
+    ],
+    "tool_selection": {
+      "auto_select": true,
+      "max_concurrent_tools": 3,
+      "timeout_per_tool": 60000,
+      "retry_attempts": 2,
+      "prefer_mcp_for_pdf": true
+    }
+  }

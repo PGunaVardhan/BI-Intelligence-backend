@@ -1,0 +1,57 @@
+{
+    "mcp_bridge": {
+      "name": "bi-intelligence-mcp-bridge",
+      "version": "1.0.0",
+      "description": "MCP Bridge for BI Intelligence Dashboard"
+    },
+    "capabilities": {
+      "tools": true,
+      "resources": true,
+      "prompts": true,
+      "sampling": true
+    },
+    "tool_execution": {
+      "concurrent_limit": 3,
+      "timeout": 60000,
+      "retry_policy": {
+        "max_retries": 2,
+        "retry_delay": 1000,
+        "exponential_backoff": true
+      }
+    },
+    "prompts": {
+      "tool_selection": {
+        "system": "You are a tool selection expert. Analyze user requests and available files to determine which tools are needed. Always provide your response in valid JSON format.",
+        "template": "User request: \"{user_message}\"\nAvailable files: {files_list}\nAvailable tools: {tools_list}\n\nSelect appropriate tools and provide reasoning. Response format:\n{\n  \"selected_tools\": [\"tool1\", \"tool2\"],\n  \"reasoning\": \"explanation\",\n  \"file_requirements\": [\"file1.pdf\", \"file2.xlsx\"],\n  \"execution_order\": [\"tool1\", \"tool2\"]\n}"
+      },
+      "response_synthesis": {
+        "system": "You are a helpful AI assistant that synthesizes tool results into clear, comprehensive responses. Provide accurate information based on the tool outputs.",
+        "template": "User request: \"{user_message}\"\nTool results: {tool_results}\nConversation context: {conversation_context}\n\nProvide a helpful response based on the tool results. Be specific and reference findings from the tools when applicable."
+      }
+    },
+    "file_processing": {
+      "max_file_size": 104857600,
+      "supported_types": [
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/vnd.ms-excel",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/plain",
+        "text/csv",
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "video/mp4",
+        "video/avi",
+        "audio/mp3",
+        "audio/wav"
+      ],
+      "temp_storage_duration": 3600000
+    },
+    "logging": {
+      "level": "info",
+      "include_tool_outputs": true,
+      "max_log_size": 10485760
+    }
+  }

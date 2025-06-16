@@ -1,0 +1,70 @@
+{
+  "available_models": [
+    {
+      "id": "claude-3-sonnet",
+      "name": "Claude 3 Sonnet",
+      "type": "api",
+      "description": "Anthropic Claude 3 Sonnet via API - Superior tool orchestration",
+      "capabilities": ["chat", "tool_calling", "file_analysis", "reasoning"],
+      "config": {
+        "api_endpoint": "https://api.anthropic.com/v1/messages",
+        "model": "claude-3-sonnet-20240229",
+        "max_tokens": 4096,
+        "temperature": 0.7
+      },
+      "mcp_support": true,
+      "requires_api_key": true,
+      "default": true
+    },
+    {
+      "id": "qwen-3-1.7b",
+      "name": "Qwen 3 - 1.7B",
+      "type": "local",
+      "description": "Local Qwen 3 model with 1.7B parameters",
+      "capabilities": ["chat", "tool_calling", "file_analysis"],
+      "config": {
+        "model_path": "./models/qwen3-1.7bb",
+        "max_tokens": 4096,
+        "temperature": 0.7,
+        "top_p": 0.9
+      },
+      "mcp_support": true,
+      "default": false
+    },
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o",
+      "type": "api",
+      "description": "OpenAI GPT-4o via API",
+      "capabilities": ["chat", "tool_calling", "file_analysis", "code_generation"],
+      "config": {
+        "api_endpoint": "https://api.openai.com/v1/chat/completions",
+        "model": "gpt-4o",
+        "max_tokens": 4096,
+        "temperature": 0.7
+      },
+      "mcp_support": true,
+      "requires_api_key": true
+    },      
+    {
+      "id": "deepseek-coder",
+      "name": "DeepSeek Coder",
+      "type": "api",
+      "description": "DeepSeek Coder model via API",
+      "capabilities": ["chat", "code_generation", "tool_calling"],
+      "config": {
+        "api_endpoint": "https://api.deepseek.com/v1/chat/completions",
+        "model": "deepseek-coder",
+        "max_tokens": 4096,
+        "temperature": 0.7
+      },
+      "mcp_support": true,
+      "requires_api_key": true
+    }
+  ],
+  "model_selection": {
+    "allow_user_selection": true,
+    "default_model": "claude-3-sonnet",
+    "fallback_model": "qwen-3-1.7b"
+  }
+}
